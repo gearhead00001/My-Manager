@@ -4,37 +4,15 @@
  
 
 import React, {type PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-
+import { SafeAreaView } from 'react-native';
+import AppStack from './src/navigation/AppStack';
 
 const App = () => {
-
   return (
-    <SafeAreaView>
-      <View style={styles.headerContainer}>
-        <Text style={{color : "white"}}>{"My Manager"}</Text>
-      </View>
-      <View style={styles.bodyContainer}>
-        <Text>"Body"</Text>
-      </View>
+    <SafeAreaView style={{flex:1}}>
+      <AppStack/>
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  headerContainer: {
-    padding : 15,
-    backgroundColor : "black",
-    
-  },
-  bodyContainer :{
-
-  }
-});
 
 export default App;
