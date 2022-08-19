@@ -1,11 +1,11 @@
 import React from "react";
-import {View, Text} from 'react-native'
 import styled from "styled-components/native";
+import RcText from "../components/RcText/RcText";
 
 const HomeScreen =()=>{
     return (
       <Container>
-        <Text>Home Screen</Text>
+        <RcText content={'Home'}/>
       </Container>
     );
 }
