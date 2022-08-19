@@ -1,15 +1,17 @@
 module.exports = {
   root: true,
-  extends: '@react-native-community',
+  env :  {  
+    browser: true,
+    amd: true,
+    node: true,
+  },
+  extends: ['eslint:recommended','plugin:react/recommended','plugin:@typescript-eslint/recommended'],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],
   overrides: [
     {
       files: ['*.ts', '*.tsx'],
       rules: {
-        '@typescript-eslint/no-shadow': ['error'],
-        'no-shadow': 'off',
-        'no-undef': 'off',
         "react/prop-types": ["error", { "ignore": ["navigation"]}],
         "no-useless-escape": "off",
         "no-trailing-spaces": "warn",
