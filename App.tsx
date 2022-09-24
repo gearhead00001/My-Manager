@@ -2,14 +2,17 @@
  * My Manager app
  */
 
-import React, {type PropsWithChildren} from 'react'
+import React from 'react'
 import { SafeAreaView } from 'react-native'
-import AppStack from './src/navigation/AppStack'
+import RootStack from './src/navigation/RootStack'
+import { AuthProvider } from './src/providers/AuthProvider/AuthProvider'
 
 const App = () => {
 	return (
 		<SafeAreaView style={{flex:1}}>
-			<AppStack/>
+			<AuthProvider>
+				<RootStack/>
+			</AuthProvider>
 		</SafeAreaView>
 	)
 }

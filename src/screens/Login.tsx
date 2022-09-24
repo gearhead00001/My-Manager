@@ -4,18 +4,19 @@ import RcContainer from '../components/RcContainer'
 import RcButton from '../components/RcButton'
 import { useAuthContext } from '../providers/AuthProvider/AuthProvider'
 
-const HomeScreen = () => {
-	const { doLogout } = useAuthContext()
+const LoginScreen = () => {
+	const { doLogin } = useAuthContext()
 
 	return (
 		<RcContainer>
 			<RcText
-				content={'Home'}
+				content={'Login'}
 				fontSize={20}
 			/>
-			<RcButton title={'Logout'} onPress={()=>doLogout()}/>
+			<RcButton title={'Login'} onPress={ ()=> {
+				doLogin()}}/>
 		</RcContainer>
 	)
 }
 
-export default HomeScreen
+export default LoginScreen
