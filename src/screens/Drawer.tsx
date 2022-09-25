@@ -3,25 +3,19 @@ import RcText from '../components/RcText'
 import RcContainer from '../components/RcContainer'
 import RcButton from '../components/RcButton'
 import { useAuthContext } from '../providers/AuthProvider/AuthProvider'
-import RcAppBar from '../components/RcAppBar'
 
-const HomeScreen = (props) => {
+const DrawerContent = (props) => {
 	const { doLogout } = useAuthContext()
-
 	return (
 		<RcContainer>
-			<RcAppBar
-				title= {'All Notes'}
-				onLeftIconClick={props.navigation.openDrawer}
-			/>
 			<RcText
-				content={'Home'}
+				content={'Drawer'}
 				fontSize={20}
 			/>
-			<RcButton title={'SampleBtn'} onPress={()=>{/**/}}/>
+			<RcButton title={'Close Drawer'} onPress={ ()=> {props.navigation.closeDrawer()}}/>
+			<RcButton title={'Logout'} onPress={()=>doLogout()}/>
 		</RcContainer>
 	)
 }
 
-export default HomeScreen
-
+export default DrawerContent
