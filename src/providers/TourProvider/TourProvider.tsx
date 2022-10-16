@@ -2,16 +2,17 @@
 
 import React, { useEffect, useState, useRef, createContext, PropsWithChildren, useContext} from "react"
 import { View } from "react-native"
-import Svg, { Defs, Mask, Rect } from "react-native-svg"
+import Svg, { Defs, Mask, Rect, Circle} from "react-native-svg"
 import styled from "styled-components/native"
 
 const TourContext = createContext({
-	updateTourAreaInfo : (tourID, stepNum, location, toolTip)=>{/**/},
+	updateTourAreaInfo : (tourID, stepNum, location, toolTip)=>{return},
 	tourAreaInfo : {},
 	startTour: (id)=> {return},
 	moveForward :()=>{return},
 	moveBackward :()=>{return},
-	stopTour :()=>{return}
+	stopTour :()=>{return},
+	TourArea :(obj)=>{return <></>}
 })
 
 const TourProvider = (props : PropsWithChildren)=>{
@@ -81,26 +82,34 @@ const TourProvider = (props : PropsWithChildren)=>{
 	},[tourAreaInfo])
 
 	return(
-		<TourContext.Provider value={{updateTourAreaInfo, tourAreaInfo, startTour, moveForward, moveBackward, stopTour}}>
+		<TourContext.Provider value={{updateTourAreaInfo, tourAreaInfo, startTour, moveForward, moveBackward, stopTour, TourArea}}>
 			{props.children}
 			{ (isTourInProgress) && renderTourOverlay({isTransitioning : isTransitioning,location : tourAreaInfo[tourID][stepNumber], toolTip : toolTips[tourID][stepNumber]})}
 		</TourContext.Provider>
 	)
 }
 
-const useTourContext = () => useContext(TourContext)
+const useAppTour = () => useContext(TourContext)
 
+const calculateFocus =(x,y,w,h)=>{
+	const r = Math.sqrt(w*w + h*h)/2
+	const mx1 = (2*x + w)/2
+	const mx2 = (2*y + h)/2
+	return {r, mx1, mx2}
+}
 const renderHighlighter =({x,y,w,h})=>{
-	console.log("Highlighter",x,y,w,h)
+	// const {r, mx1, mx2} = calculateFocus(x,y,w,h)
+	// console.log("Highlighter",x,y,w,h)
 	return(
 		<Svg width = "100%" height = "100%">
 			<Defs>
 				<Mask id="mask" x="0" y="0" width = "100%" height = "100%">
 					<Rect width = "100%" height = "100%" fill="#fff"/>
-					<Rect x={x} y={y} width={w} height={h} fill= "black"/>
+					<Rect x={x} y={y} width={w} height={h} rx={3} fill= "black"/>
+					{/* <Circle cx={mx1} cy={mx2} r={r} stroke-width="4" fill="black" /> */}
 				</Mask>
 			</Defs>
-			<Rect width = "100%" height = "100%" fill= "rgba(0, 0, 0, 0.8)" mask= "url(#mask)"/>
+			<Rect width = "100%" height = "100%" fill= "rgba(0, 0, 0, 0.8)" mask="url(#mask)"/>
 		</Svg>
 	)
 }
@@ -135,7 +144,7 @@ interface ITourArea{
 const TourArea = (props : ITourArea) => {
 	const { tourID, children, stepNumber, toolTip} = props
 	const [location, pullLocation] = useState({x :0, y : 0, w : 0, h: 0})
-	const { updateTourAreaInfo } = useTourContext()
+	const { updateTourAreaInfo } = useAppTour()
 	const ViewRef = useRef<View>()
 
 	useEffect(()=>{
@@ -150,7 +159,7 @@ const TourArea = (props : ITourArea) => {
 		<TourAreaRoot ref={ViewRef}
 			onLayout={({nativeEvent}) => {
 				ViewRef.current.measure( (x, y, width, height, pageX, pageY) => {
-					pullLocation({x : pageX, y : pageY, w : width, h :height})
+					pullLocation({x : pageX -1, y : pageY-1, w : width+2, h :height+2})
 					// console.log("Screen Name ....", tourID, {x : pageX, y : pageY, w : width, h :height} )
 					// updateTourAreaInfo(tourID, stepNumber, {x : pageX, y : pageY, w : width, h :height})
 				})
@@ -163,8 +172,8 @@ const TourArea = (props : ITourArea) => {
 
 const TourAreaRoot = styled.View``
 
-const SampleToolTip = (props)=>{
-	const { moveForward, moveBackward, stopTour } = useTourContext()
+const SampleToolTip = (props : {val : number})=>{
+	const { moveForward, moveBackward, stopTour } = useAppTour()
 	return(
 		<SampleToolTipView>
 			<SampleToolTipText>{`Its me Area ${props.val}. I'm being displayed`}</SampleToolTipText>
@@ -216,4 +225,4 @@ const tourTipConfig = {
 
 }
 
-export { TourArea, useTourContext, TourProvider, tourTipConfig}
+export { useAppTour, TourProvider, tourTipConfig}

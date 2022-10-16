@@ -4,13 +4,12 @@ import RcContainer from '../components/RcContainer'
 import RcButton from '../components/RcButton'
 import { useAuthContext } from '../providers/AuthProvider/AuthProvider'
 import RcAppBar from '../components/RcAppBar'
-import { TourArea, useTourContext, tourTipConfig} from '../providers/TourProvider/TourProvider'
+import { useAppTour, tourTipConfig} from '../providers/TourProvider/TourProvider'
 import { View } from 'react-native'
 
 const HomeScreen = (props) => {
 	const { doLogout } = useAuthContext()
-	const [isTourAreaVisible, setIsTourAreaVisible] = useState(false)
-	const { tourAreaInfo, startTour } = useTourContext()
+	const { tourAreaInfo, startTour, TourArea } = useAppTour()
 
 	return (
 		<RcContainer>
@@ -45,13 +44,11 @@ const HomeScreen = (props) => {
 			</TourArea>
 
 			{
-				isTourAreaVisible &&
-				Object.entries(tourAreaInfo).map(([key, value])=>
-					<View key = {key} style={{position:'absolute', top:value.y, left:value.x, width:value.w, height: value.h, backgroundColor:'rgba(0,0,0,0.5)'}}/>
-				)
+				// isTourAreaVisible &&
+				// Object.entries(tourAreaInfo).map(([key, value])=>
+				// <View key = {key} style={{position:'absolute', top:value.y, left:value.x, width:value.w, height: value.h, backgroundColor:'rgba(0,0,0,0.5)'}}/>
+				// )
 			}
-
-
 		</RcContainer>
 	)
 }

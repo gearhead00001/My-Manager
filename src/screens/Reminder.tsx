@@ -3,10 +3,11 @@ import RcText from '../components/RcText'
 import RcContainer from '../components/RcContainer'
 import RcButton from '../components/RcButton'
 import RcAppBar from '../components/RcAppBar'
-import { TourArea, useTourContext, tourTipConfig} from '../providers/TourProvider/TourProvider'
+import styled from 'styled-components/native'
+import {useAppTour, tourTipConfig} from '../providers/TourProvider/TourProvider'
 
 const ReminderScreen = (props) => {
-	const { startTour} = useTourContext()
+	const { startTour, TourArea} = useAppTour()
 
 	return (
 		<RcContainer>
@@ -14,19 +15,27 @@ const ReminderScreen = (props) => {
 				title= {'Reminders'}
 				onLeftIconClick={props.navigation.goBack}
 			/>
-			<TourArea
-				tourID={'Reminder'}
-				stepNumber = {1}
-				toolTip={tourTipConfig['Reminder'][1]}
-			>
-				<RcText
-					content={'Reminders'}
-					fontSize={20}
-				/>
-			</TourArea>
+			<TextHolder>
+				<TourArea
+					tourID={'Reminder'}
+					stepNumber = {1}
+					toolTip={tourTipConfig['Reminder'][1]}
+				>
+					<RcText
+						content={'Reminders'}
+						fontSize={20}
+					/>
+				</TourArea>
+			</TextHolder>
 			<RcButton title={'Reminder'} onPress={ ()=> {startTour('Reminder')}}/>
 		</RcContainer>
 	)
 }
 
 export default ReminderScreen
+
+const TextHolder = styled.View`
+	justify-content : center;
+	align-items : center;
+
+`
