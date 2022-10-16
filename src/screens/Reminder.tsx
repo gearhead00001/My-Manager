@@ -3,8 +3,10 @@ import RcText from '../components/RcText'
 import RcContainer from '../components/RcContainer'
 import RcButton from '../components/RcButton'
 import RcAppBar from '../components/RcAppBar'
+import { TourArea, useTourContext, tourTipConfig} from '../providers/TourProvider/TourProvider'
 
 const ReminderScreen = (props) => {
+	const { startTour} = useTourContext()
 
 	return (
 		<RcContainer>
@@ -12,11 +14,17 @@ const ReminderScreen = (props) => {
 				title= {'Reminders'}
 				onLeftIconClick={props.navigation.goBack}
 			/>
-			<RcText
-				content={'Reminders'}
-				fontSize={20}
-			/>
-			<RcButton title={'Reminder'} onPress={ ()=> {/* */}}/>
+			<TourArea
+				tourID={'Reminder'}
+				stepNumber = {1}
+				toolTip={tourTipConfig['Reminder'][1]}
+			>
+				<RcText
+					content={'Reminders'}
+					fontSize={20}
+				/>
+			</TourArea>
+			<RcButton title={'Reminder'} onPress={ ()=> {startTour('Reminder')}}/>
 		</RcContainer>
 	)
 }

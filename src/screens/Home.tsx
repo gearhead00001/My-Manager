@@ -4,23 +4,20 @@ import RcContainer from '../components/RcContainer'
 import RcButton from '../components/RcButton'
 import { useAuthContext } from '../providers/AuthProvider/AuthProvider'
 import RcAppBar from '../components/RcAppBar'
-import { TourArea, useTourContext} from '../providers/TourProvider/TourProvider'
+import { TourArea, useTourContext, tourTipConfig} from '../providers/TourProvider/TourProvider'
 import { View } from 'react-native'
 
 const HomeScreen = (props) => {
 	const { doLogout } = useAuthContext()
 	const [isTourAreaVisible, setIsTourAreaVisible] = useState(false)
-	const { tourAreaInfo } = useTourContext()
-	const startTour =()=>{
-		setIsTourAreaVisible(true)
-		console.log(tourAreaInfo)
-	}
+	const { tourAreaInfo, startTour } = useTourContext()
 
 	return (
 		<RcContainer>
 			<TourArea
 				tourID={'Home'}
 				stepNumber={2}
+				toolTip={tourTipConfig['Home'][2]}
 			>
 				<RcAppBar
 					title= {'All Notes'}
@@ -31,6 +28,7 @@ const HomeScreen = (props) => {
 			<TourArea
 				tourID={'Home'}
 				stepNumber={1}
+				toolTip={tourTipConfig['Home'][1]}
 			>
 				<RcText
 					content={'Home'}
@@ -38,7 +36,13 @@ const HomeScreen = (props) => {
 				/>
 			</TourArea>
 
-			<RcButton title={'SampleBtn'} onPress={()=>{/**/startTour()}}/>
+			<TourArea
+				tourID={'Home'}
+				stepNumber={3}
+				toolTip={tourTipConfig['Home'][3]}
+			>
+				<RcButton title={'SampleBtn'} onPress={()=>{/**/ startTour('Home')}}/>
+			</TourArea>
 
 			{
 				isTourAreaVisible &&

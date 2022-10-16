@@ -12,11 +12,11 @@ import { TourProvider } from './src/providers/TourProvider/TourProvider'
 const App = () => {
 	return (
 		<SafeAreaView style={{flex:1}}>
-			<AuthProvider>
-				<TourProvider>
+			<TourProvider>
+				<AuthProvider>
 					<RootStack/>
-				</TourProvider>
-			</AuthProvider>
+				</AuthProvider>
+			</TourProvider>
 		</SafeAreaView>
 	)
 }
